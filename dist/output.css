@@ -554,9 +554,26 @@ video {
   display: none;
 }
 
+.m-5 {
+  margin: 1.25rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
 .bg-amber-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(251 191 36 / var(--tw-bg-opacity, 1));
+}
+
+.bg-lime-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(163 230 53 / var(--tw-bg-opacity, 1));
+}
+
+.p-7 {
+  padding: 1.75rem;
 }
 
 .text-3xl {
