@@ -1,19 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="./dist/output.css" rel="stylesheet">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link href="./dist/output.css" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Elms+Sans:ital@0;1&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
-</head>
-<body>
-    <h1 style="font-size:xx-large; color: blue;">Hello World</h1>
-    <h1 class="text-3xl font-bold underline">
-    Hello world!
-    </h1>
-    <h1 class="text-5xl bg-amber-400 text-red-700">Hay what sub mann!</h1>
-    <button class="bg-lime-300 p-7 m-4">please click me</button>
-    <h1 class="text-5xl bg-amber-400 text-red-700">Hay what sub mann!</h1>
-</body>
-</html>
+    </head>
+    <body class="font-kanit">
+        <section class="navbar">
+            <div class="logo">
+                <h1><a href="#" class="p-4">Clothsess</a></h1>
+            </div>
+            <div class="searchbar">
+                <form action="" class="searchbar-box">
+                    <input type="text">
+                    <div class="icon-search">
+                        <a href="#" >
+                            <svg xmlns="http://www.w3.org/2000/svg" 
+                                 fill="none"
+                                 viewBox="0 0 24 24"
+                                 stroke-width="2.5" 
+                                 stroke="currentColor" 
+                                 class="size-6">
+                                <path stroke-linecap="round" 
+                                      stroke-linejoin="round" 
+                                      d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>
+
+                         </a>
+                    </div>
+                </form>
+            </div>
+            <ul class="navbar-navlist">
+                <li><a href="#">Log in</a></li>
+                <li><a href="#">Sign up</a></li>
+                <li><a href="#">Language</a></li>
+                <li class="product-number-parent">
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" 
+                            fill="none" 
+                            viewBox="0 0 24 24" 
+                            stroke-width="1.5" 
+                            stroke="currentColor" 
+                            class="size-6">
+                                <path stroke-linecap="round" 
+                                    stroke-linejoin="round" 
+                                    d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                        </svg>
+                    </a>
+                    <span class="product-number">
+                        0
+                    </span>
+                </li> 
+                    <!-- tagปิด icon cart -->
+            </ul>
+        </section>
+        <header>
+            
+            <form action="" class="searchbar">
+
+            </form>
+            <div class="cart">
+
+            </div>
+
+        </header>
+        
+        <div class="container">
+            <div class="tag-name">
+                <h1 class="text-2xl mb-2">
+                    Flash sale
+                </h1>
+            </div>
+            <div class="product-con">
+                <div class="product-item">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW91c2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=900" alt="">
+                    </div>
+                    <div class="product-name">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente ipsam eaque reiciendis. Temporibus, magni in!
+                    </div>
+                    <div class="product-bottom-label">
+                        <div class="product-price">
+                            ฿499
+                        </div>
+                        <div class="product-sell">
+                            10K+ bought in past month
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW91c2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=900" alt="">
+                    </div>
+                    <div class="product-name">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente ipsam eaque reiciendis. Temporibus, magni in!
+                    </div>
+                    <div class="product-bottom-label">
+                        <div class="product-price">
+                            ฿499
+                        </div>
+                        <div class="product-sell">
+                            <span>10K+ bought in past month</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW91c2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=900" alt="">
+                    </div>
+                    <div class="product-name">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente ipsam eaque reiciendis. Temporibus, magni in!
+                    </div>
+                    <div class="product-bottom-label">
+                        <div class="product-price">
+                            ฿499
+                        </div>
+                        <div class="product-sell">
+                            10K+ bought in past month
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW91c2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=900" alt="">
+                    </div>
+                    <div class="product-name">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente ipsam eaque reiciendis. Temporibus, magni in!
+                    </div>
+                    <div class="product-bottom-label">
+                        <div class="product-price">
+                            ฿499
+                        </div>
+                        <div class="product-sell">
+                            10K+ bought in past month
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW91c2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=900" alt="">
+                    </div>
+                    <div class="product-name">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente ipsam eaque reiciendis. Temporibus, magni in!
+                    </div>
+                    <div class="product-bottom-label">
+                        <div class="product-price">
+                            ฿499
+                        </div>
+                        <div class="product-sell">
+                            10K+ bought in past month
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW91c2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=900" alt="">
+                    </div>
+                    <div class="product-name">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente ipsam eaque reiciendis. Temporibus, magni in!
+                    </div>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            ฿499
+                        </div>
+                        <div class="product-sell">
+                            10K+ bought in past month
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW91c2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=900" alt="">
+                    </div>
+                    <div class="product-name">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente ipsam eaque reiciendis. Temporibus, magni in!
+                    </div>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            ฿499
+                        </div>
+                        <div class="product-sell">
+                            10K+ bought in past month
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW91c2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=900" alt="">
+                    </div>
+                    <div class="product-name">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente ipsam eaque reiciendis. Temporibus, magni in!
+                    </div>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            ฿499
+                        </div>
+                        <div class="product-sell">
+                            10K+ bought in past month
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW91c2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=900" alt="">
+                    </div>
+                    <div class="product-name">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente ipsam eaque reiciendis. Temporibus, magni in!
+                    </div>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            ฿499
+                        </div>
+                        <div class="product-sell">
+                            10K+ bought in past month
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW91c2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=900" alt="">
+                    </div>
+                    <div class="product-name">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente ipsam eaque reiciendis. Temporibus, magni in!
+                    </div>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            ฿499
+                        </div>
+                        <div class="product-sell">
+                            10K+ bought in past month
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW91c2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=900" alt="">
+                    </div>
+                    <div class="product-name">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente ipsam eaque reiciendis. Temporibus, magni in!
+                    </div>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            ฿499
+                        </div>
+                        <div class="product-sell">
+                            10K+ bought in past month
+                        </div>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW91c2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=900" alt="">
+                    </div>
+                    <div class="product-name">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente ipsam eaque reiciendis. Temporibus, magni in!
+                    </div>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            ฿499
+                        </div>
+                        <div class="product-sell">
+                            10K+ bought in past month
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="text-xl">
+                Follow us
+                <div>
+                <ul class="follow-logo">
+                    <li><a href="https://www.facebook.com/" class="follow-logo-facebook"><i class="fab fa-facebook"></i></a></li>
+                    <li><a href="https://www.twitter.com/" class="follow-logo-x"><i class="fa-brands fa-x-twitter"></i></a></li>
+                    <li><a href="https://www.instagram.com/" class="follow-logo-instragram"><i class="fa-brands fa-instagram"></i></a></li>
+                </ul>
+                </div>
+            </div>
+            <p class="text-xl">&copy;Clothsess 2025</p>
+        </footer>
+
+        
+    </body>
+    </html>
