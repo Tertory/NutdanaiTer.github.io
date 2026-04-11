@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ⚠️ SHARED: CSS เดียวกับ index.html และ shoppingCart.html -->
+    <link href="./dist/output.css" rel="stylesheet">
+    <!-- ⚠️ SHARED: Font Awesome เดียวกับทุกหน้า -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <title>Delivery Address</title>
+</head>
+
+<!-- ═══════════════════════════════════════════════════════════
+     data-page="deliveryAddress"
+     JS Router อ่านค่านี้แล้วจะรัน: initModal(), formDeliveryPat()
+     class="page-delivery" → CSS ใช้ prefix นี้ override style เฉพาะหน้า delivery
+     ═══════════════════════════════════════════════════════════ -->
+<body data-page="deliveryAddress" class="page-delivery" style="font-family: Tahoma, Verdana, sans-serif;">
+
+    <!-- ===== Header ===== -->
+    <!-- ⚠️ SHARED: Header นี้ copy โครงสร้างมาจาก index.html
+         ต่างจาก index.html และ shoppingCart.html ตรงที่:
+           - ใช้ .nav-wrap-delivery แทน .nav-wrap (CSS จัดชิดขวา)
+           - ไม่มี logo และ search bar ใน nav
+           - CSS: .page-delivery .sticky ลบ margin-bottom ออก (ต่างจาก global .sticky) -->
+    <header class="sticky">
+        <nav>
+            <div class="nav-container">
+                <!-- .nav-wrap-delivery → CSS: justify-content:end จัดเมนูชิดขวา -->
+                <div class="nav-wrap-delivery">
+
+                    <!-- เมนูขวา: ⚠️ SHARED กับ index.html และ shoppingCart.html
+                         หน้านี้ไม่มี .countItems เพราะไม่ต้องแสดงจำนวนสินค้า -->
+                    <div class="nav-right">
+                        <ul>
+                            <li class="dropdown"><i class="fa-solid fa-user"></i>
+                                <div class="dropdown-content">
+                                    <a href="#">Sign in / Register</a>
+                                    <a href="#">My order</a>
+                                    <a href="#">My Message</a>
+                                </div>
+                            </li>
+                            <li class="dropdown"><a href="shoppingCart.html"><i class="fa-solid fa-cart-shopping">
+                                <span>
+                                    0
+                                </span>
+                            </i></a></li>
+                            <li class="dropdown"><a href="deliveryPage.html"><i class="fa-solid fa-truck"></i></a></li>
+                            <li class="dropdown"><a href="#"><i class="fa-solid fa-globe"></i></a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- ===== End Header ===== -->
+
+    <!-- ===== Page Title Bar ===== -->
+    <!-- แถบชื่อหน้า: มี logo + เส้นแบ่ง + ชื่อ "Delivery Address"
+         เฉพาะหน้า deliveryPage.html เท่านั้น ไม่มีในหน้าอื่น
+         CSS: .linebottom ขีดเส้นใต้แถบนี้แบ่งจาก main content -->
+    <div class="linebottom">
+        <div class="container">
+            <div class="head-delivery">
+                <!-- Logo ลิงก์กลับหน้าหลัก -->
+                <a href="index.html">
+                    <img src="./logoH.svg" alt="">
+                </a>
+                <!-- เส้น separator "|" ระหว่าง logo กับชื่อหน้า
+                     CSS: .line ตั้งขนาด font ให้ใหญ่เพื่อให้เส้นสูง -->
+                <div class="page-derivery line">
+                    <p>|</p>
+                </div>
+                <!-- ชื่อหน้า "Delivery Address" สีเขียวตามธีม -->
+                <div class="nameaddress">
+                    <h1>Delivery Address</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ===== End Page Title Bar ===== -->
+
+    <!-- ===== Main Content ===== -->
+    <!-- พื้นที่หลักสำหรับจัดการที่อยู่จัดส่ง
+         CSS: .page-delivery main มีพื้นหลังสีอ่อน (#fbfbfb) -->
+    <main>
+        <div class="formdelivery container">
+            <!-- กล่องหลัก: จำกัดกว้าง 700px จัดกลางด้วย margin auto
+                 CSS: .formdelivery-wrap -->
+            <div class="formdelivery-wrap mt-4">
+
+                <!-- --- Address List Header ---
+                     หัวข้อ "My Address" พร้อม icon pin สีแดง -->
+                <div class="myaddress">
+                    <!-- CSS: .page-delivery .fa-location-dot สีแดง -->
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h3>My Address</h3>
+                </div>
+
+                <!-- ปุ่ม "+ Add New Address"
+                     #add-NewAddress → JS (initModal) ผูก event click → เรียก closeModalAdd()
+                                       ซึ่งจะซ่อนปุ่มนี้และแสดงฟอร์ม
+                     CSS: #add-NewAddress.close ซ่อนปุ่มด้วย display:none -->
+                <button type="button" class="add-NewAddress" id="add-NewAddress">
+                    <i class="fa-solid fa-plus"></i>
+                    Add New Address
+                </button>
+
+                <!-- --- Address List ---
+                     #currentAdd → JS (formDeliveryPat → renderAddress) สร้าง <li> ใส่ที่นี่
+                     แต่ละ <li> มีปุ่ม ❌ data-index สำหรับลบที่อยู่ -->
+                <ul id="currentAdd"></ul>
+
+                <!-- Template ที่อยู่ (ซ่อนอยู่ด้วย #saveAdd display:none ใน CSS)
+                     ปัจจุบันถูกแทนที่ด้วย renderAddress() ใน JS แล้ว -->
+                <div class="saveAddress" id="saveAdd">
+                    <div><input type="radio" name="radio" id="tickradio"></div>
+                    <div class="infoAddress"></div>
+                    <div class="editAddress">
+                        <p>Edit</p>
+                    </div>
+                </div>
+
+                <!-- --- Address Form ---
+                     #formDelivery → ซ่อนด้วย CSS (#formDelivery display:none)
+                                     แสดงเมื่อ JS (closeModalAdd) เพิ่ม class .open
+                     JS (formDeliveryPat) ผูก event submit เพื่อบันทึกที่อยู่ใหม่ลง localStorage
+                     input แต่ละช่อง: id="adXxx" → JS ดึงค่าตอน submit -->
+                <form action="#" class="flex-wrap mt-4" id="formDelivery">
+
+                    <!-- ช่องชื่อ: #adName → JS ดึงค่าเป็น newAddress.addName -->
+                    <div>
+                        <label for="name">Name : </label>
+                        <input type="text" name="name" id="adName">
+                    </div>
+
+                    <!-- ช่องนามสกุล: #adSurename → JS ดึงค่าเป็น newAddress.addSurename -->
+                    <div>
+                        <label for="surename">Surename : </label>
+                        <input type="text" name="surename" id="adSurename">
+                    </div>
+
+                    <!-- ช่องบ้านเลขที่: #adHouse → JS ดึงค่าเป็น newAddress.addHouse -->
+                    <div>
+                        <label for="houseNo">House no. : </label>
+                        <input type="text" name="houseNo" id="adHouse">
+                    </div>
+
+                    <!-- ช่องหมู่/ซอย/ถนน: #adMoo → JS ดึงค่าเป็น newAddress.addMoo -->
+                    <div>
+                        <label for="mooSoiRoad">Moo/Soi/Road : </label>
+                        <input type="text" name="mooSoiRoad" id="adMoo">
+                    </div>
+
+                    <!-- ช่องตำบล: #adSubdist → JS ดึงค่าเป็น newAddress.addSubdist -->
+                    <div>
+                        <label for="sub-district">Sub-district/Tambon : </label>
+                        <input type="text" name="sub-district" id="adSubdist">
+                    </div>
+
+                    <!-- ช่องอำเภอ: #adDist → JS ดึงค่าเป็น newAddress.addDist -->
+                    <div>
+                        <label for="district">District/Kwaeng : </label>
+                        <input type="text" name="district" id="adDist">
+                    </div>
+
+                    <!-- ช่องจังหวัด: #adProv → JS ดึงค่าเป็น newAddress.addProv -->
+                    <div>
+                        <label for="province">Province : </label>
+                        <input type="text" name="province" id="adProv">
+                    </div>
+
+                    <!-- ช่องรหัสไปรษณีย์: #adZip → JS ดึงค่าเป็น newAddress.addZip -->
+                    <div>
+                        <label for="zipcode">Zip-code : </label>
+                        <input type="text" name="zipcode" id="adZip">
+                    </div>
+
+                    <!-- ช่องโทรศัพท์: #adTel → JS ดึงค่าเป็น newAddress.addTel -->
+                    <div>
+                        <label for="telno">Tel : </label>
+                        <input type="text" name="telno" id="adTel">
+                    </div>
+
+                    <!-- ปุ่ม Cancel และ Submit
+                         #showWhenaddBtn → CSS ซ่อนด้วย display:none
+                                           JS (closeModalAdd) เพิ่ม .open เพื่อแสดงพร้อมฟอร์ม
+                         #ccBtn → JS (initModal) ผูก event click → เรียก openModalAdd()
+                                  เพื่อซ่อนฟอร์มและแสดงปุ่ม Add New Address คืน
+                         #smBtn (type="submit") → form submit → JS (formDeliveryPat) บันทึกที่อยู่ -->
+                    <div class="address-bottom justify-end" id="showWhenaddBtn">
+                        <button type="button" id="ccBtn">
+                            Cancle
+                        </button>
+                        <button type="submit" id="smBtn">
+                            Submit
+                        </button>
+                    </div>
+
+                </form>
+                <!-- --- End Address Form --- -->
+
+            </div>
+        </div>
+    </main>
+    <!-- ===== End Main Content ===== -->
+
+    <!-- ⚠️ SHARED: script.js ไฟล์เดียวกับทุกหน้า
+         Router ใน JS จะอ่าน data-page="deliveryAddress" และเรียก initModal(), formDeliveryPat() -->
+    <script src="script.js" defer></script>
+</body>
+</html>

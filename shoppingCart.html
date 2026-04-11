@@ -1,0 +1,252 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ⚠️ SHARED: CSS เดียวกับ index.html และ deliveryPage.html -->
+    <link href="./dist/output.css" rel="stylesheet">
+    <!-- ⚠️ SHARED: Font Awesome เดียวกับทุกหน้า -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <title>Cart</title>
+</head>
+
+<!-- ═══════════════════════════════════════════════════════════
+     data-page="cartList"
+     JS Router อ่านค่านี้แล้วจะรัน: renderCartPage(), initVoucher(), initCheckoutModal()
+     class="shoppingC" → CSS ใช้ prefix นี้ override style เฉพาะหน้าตะกร้า
+     ═══════════════════════════════════════════════════════════ -->
+<body data-page="cartList" class="page-index shoppingC" style="font-family: Tahoma, Verdana, sans-serif;">
+
+    <!-- ===== Header ===== -->
+    <!-- ⚠️ SHARED: Header นี้ copy มาจาก index.html โครงสร้างเหมือนกันทุกอย่าง
+         ต่างจาก index.html ตรงที่: ไม่มี search bar ต่างหากใน deliveryPage.html
+         CSS: class="sticky" ทำให้ header ลอยติดด้านบนตลอดเวลา -->
+    <header class="sticky">
+        <nav>
+            <div class="nav-container">
+                <div class="nav-wrap">
+
+                    <!-- Logo: ⚠️ SHARED กับ index.html -->
+                    <div class="logo">
+                        <a href="index.html"><img src="./logoH.svg" alt=""></a>
+                    </div>
+
+                    <!-- Search Bar: ⚠️ SHARED กับ index.html
+                         CSS: .shoppingC .search-bar button override ความสูงปุ่มให้สูงขึ้นในหน้านี้ -->
+                    <div class="search-bar">
+                        <form action="">
+                            <input type="text" name="" id="">
+                        </form>
+                        <button type="button" class="svg-search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+
+                    <!-- เมนูขวา: ⚠️ SHARED กับ index.html และ deliveryPage.html
+                         .countItems → JS (updateCartCount) อัปเดตตัวเลขสินค้า -->
+                    <div class="nav-right">
+                        <ul>
+                            <li class="dropdown"><i class="fa-solid fa-user"></i>
+                                <div class="dropdown-content">
+                                    <a href="#">Sign in / Register</a>
+                                    <a href="#">My order</a>
+                                    <a href="#">My Message</a>
+                                </div>
+                            </li>
+                            <!-- .countItems → JS (updateCartCount) อัปเดตตัวเลขนี้ -->
+                            <li class="dropdown"><a href="shoppingCart.html"><i class="fa-solid fa-cart-shopping">
+                                <span class="countItems">
+                                    0
+                                </span>
+                            </i></a></li>
+                            <li class="dropdown"><a href="deliveryPage.html"><i class="fa-solid fa-truck"></i></a></li>
+                            <li class="dropdown"><a href="#"><i class="fa-solid fa-globe"></i></a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- ===== End Header ===== -->
+
+    <!-- ===== Main Content ===== -->
+    <!-- แบ่งเป็น 2 ฝั่ง: ซ้าย (รายการสินค้า) และขวา (สรุปยอด)
+         CSS: .shoppingC .main-wrap ใช้ flex จัดสองฝั่งให้อยู่แถวเดียวกัน -->
+    <main>
+        <div class="container">
+            <div class="main-wrap">
+
+                <!-- --- Left Container: รายการสินค้าในตะกร้า ---
+                     CSS: .leftContainer flex:2 → กว้างกว่าฝั่งขวา 2 เท่า -->
+                <div class="leftContainer boxTemplate">
+
+                    <!-- แถบ Select All + จำนวนสินค้า
+                         #boxForSelect → JS (renderCartPage) ผูก event "select all"
+                                         เมื่อ tick จะ tick checkbox ทุกรายการพร้อมกัน
+                         .texttie span → JS อัปเดตข้อความ "X items" -->
+                    <div class="selectItems boxTemplate" id="selectItems">
+                        <label class="checkbox">
+                            <input type="checkbox" id="boxForSelect">
+                            <span class="checkmark"></span>
+                        </label>
+                        <div class="texttie"><span>SELECT ALL<span> 0 items</span></span></div>
+                    </div>
+
+                    <!-- กล่องแสดงรายการสินค้าในตะกร้า
+                         .product-cart → JS (renderCartPage) สร้าง HTML สินค้าแต่ละชิ้นใส่ที่นี่
+                         เนื้อหาข้างในถูกสร้างทั้งหมดโดย JavaScript ไม่ใช่ HTML -->
+                    <div class="product-cart boxTemplateProduct">
+                        <!-- JS appendChild โดย renderCartPage() -->
+                    </div>
+
+                </div>
+                <!-- --- End Left Container --- -->
+
+                <!-- --- Right Container: สรุปยอดและ checkout ---
+                     CSS: .rightContainer flex:1 → แคบกว่าฝั่งซ้าย, height:min-content ให้สูงแค่เนื้อหา -->
+                <div class="rightContainer boxTemplate">
+                    <div class="order-summary">
+
+                        <!-- หัวข้อ Order Summary + จำนวนสินค้าที่เลือก
+                             .summary-count → JS อัปเดต "(X items)" ต่อท้าย -->
+                        <h1>Order Summary<span class="summary-count"></span></h1>
+
+                        <div class="bf-checkout boxTemplateRight">
+
+                            <!-- ยอดสินค้า: .subtotal-price → JS (updateSummary) อัปเดตตัวเลข -->
+                            <div class="subTotal">Subtotal<span class="subtotal-price">0</span></div>
+
+                            <!-- ค่าส่ง: .shipping-price → JS (updateSummary) คำนวณจาก qty * 1.50 -->
+                            <div class="shippingFee">Shipping Fee <span class="shipping-price">0</span></div>
+
+                            <!-- Voucher: ช่องกรอก coupon code
+                                 JS (initVoucher) ดัก submit ตรวจสอบ code "1234" → ลด $50 -->
+                            <div class="voucher">
+                                <form>
+                                    <input type="text">
+                                    <button>Apply</button>
+                                </form>
+                            </div>
+
+                            <!-- แถวส่วนลด: ซ่อนด้วย style="display:none" โดย default
+                                 JS (initVoucher / updateSummary) แสดง/ซ่อนและอัปเดตค่า
+                                 .discount-price → JS เขียนตัวเลขส่วนลด -->
+                            <div class="discount-row" style="display:none;">
+                                <span>Coupon Discount</span>
+                                <span class="discount-price">0</span>
+                            </div>
+
+                            <!-- ยอดรวมทั้งหมด: .grand-total-price → JS (updateSummary) คำนวณและอัปเดต -->
+                            <div class="grandTotal">Total <span class="grand-total-price">0</span></div>
+                        </div>
+
+                        <!-- ปุ่ม Checkout: JS (initCheckoutModal) ผูก event click
+                             กดแล้วจะเปิด modal #checkoutModal -->
+                        <div class="btnCheckOut">
+                            <button>PROCEED TO CHECKOUT</button>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- --- End Right Container --- -->
+
+            </div>
+        </div>
+    </main>
+    <!-- ===== End Main Content ===== -->
+
+    <!-- ===== Checkout Modal ===== -->
+    <!-- Modal สรุปคำสั่งซื้อก่อนยืนยัน
+         เฉพาะหน้า shoppingCart.html เท่านั้น ไม่มีในหน้าอื่น
+         #checkoutModal   → JS (initCheckoutModal) เปิด/ปิดด้วย class="active"
+         CSS: .modal-overlay ซ่อนด้วย display:none แสดงเมื่อ JS เพิ่ม .active -->
+
+    <!-- ชั้น 1: overlay คลุมทั้งจอ (พื้นหลังดำโปร่งแสง) -->
+    <div class="modal-overlay" id="checkoutModal">
+
+        <!-- ชั้น 2: กล่อง modal ตรงกลางจอ -->
+        <div class="modal-box">
+
+            <!-- หัว modal: ชื่อ "Checkout" และปุ่มปิด
+                 #closeModal → JS ผูก event click เพื่อปิด modal (ลบ class .active) -->
+            <div class="modal-header">
+                <span>Checkout</span>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+
+            <!-- เนื้อหา modal: แบ่งเป็น 4 section
+                 JS (loadModalData) สร้าง HTML ใส่ใน #modalAddress และ #modalItems -->
+            <div class="modal-body">
+
+                <!-- Section 1: ที่อยู่จัดส่ง
+                     #modalAddress → JS (loadModalData) ดึงที่อยู่จาก localStorage มาแสดง -->
+                <div class="modal-section">
+                    <h3>Delivery Address</h3>
+                    <div class="modal-address" id="modalAddress">
+                        <p>No address selected</p>
+                    </div>
+                </div>
+
+                <!-- Section 2: รายการสินค้าที่เลือก
+                     #modalItems → JS (loadModalData) วน loop สินค้าที่ tick มาแสดง -->
+                <div class="modal-section">
+                    <h3>Order Items</h3>
+                    <div id="modalItems"></div>
+                </div>
+
+                <!-- Section 3: วิธีชำระเงิน (radio button เลือกได้ 1 อย่าง) -->
+                <div class="modal-section">
+                    <h3>Payment Method</h3>
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="card" checked>
+                        <span>Credit / Debit Card</span>
+                    </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="paypal">
+                        <span>PayPal</span>
+                    </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="cod">
+                        <span>Cash on Delivery</span>
+                    </label>
+                </div>
+
+                <!-- Section 4: สรุปยอดใน modal
+                     #modalSubtotal, #modalShipping, #modalDiscount, #modalTotal
+                     → JS (loadModalData) คำนวณและเขียนตัวเลขทั้งหมด -->
+                <div class="modal-section">
+                    <div class="modal-row">
+                        <span>Subtotal</span>
+                        <span id="modalSubtotal">0</span>
+                    </div>
+                    <div class="modal-row">
+                        <span>Shipping Fee</span>
+                        <span id="modalShipping">0</span>
+                    </div>
+                    <div class="modal-row discount">
+                        <span>Coupon Discount</span>
+                        <span id="modalDiscount">0</span>
+                    </div>
+                    <div class="modal-row total">
+                        <span>Total</span>
+                        <span id="modalTotal">0</span>
+                    </div>
+                </div>
+
+                <!-- ปุ่มยืนยัน order
+                     #confirmOrder → JS (initCheckoutModal) ผูก event click
+                     กดแล้วจะลบสินค้าที่ tick ออกจาก cart และปิด modal -->
+                <button class="confirm-order-btn" id="confirmOrder">
+                    Confirm Order
+                </button>
+
+            </div>
+        </div>
+    </div>
+    <!-- ===== End Checkout Modal ===== -->
+
+    <!-- ⚠️ SHARED: script.js ไฟล์เดียวกับทุกหน้า
+         Router ใน JS จะอ่าน data-page="cartList" และเรียก renderCartPage(), initVoucher(), initCheckoutModal() -->
+    <script src="script.js" defer></script>
+</body>
+</html>

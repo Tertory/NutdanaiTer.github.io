@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home Page</title>
+        <!-- CSS หลักที่ build จาก Tailwind -->
+        <link href="./dist/output.css" rel="stylesheet">
+        <!-- Font Awesome สำหรับ icon ทั้งหมด เช่น cart, user, mars, venus -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    </head>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         data-page="main"
+         JS Router ใน script.js อ่านค่านี้เพื่อตัดสินใจว่าจะเรียกฟังก์ชันไหน
+         → จะรัน: initSliderpic(), initAddToCart(), initFilter()
+         ═══════════════════════════════════════════════════════════ -->
+    <body data-page="main" class="page-index" style="font-family: Tahoma, Verdana, sans-serif;">
+
+        <!-- ===== Header ===== -->
+        <!-- ⚠️ SHARED: โครงสร้าง Header นี้ใช้ร่วมกับ shoppingCart.html และ deliveryPage.html
+             ต่างกันแค่ deliveryPage.html ใช้ .nav-wrap-delivery แทน .nav-wrap
+             และไม่มี search bar
+             CSS: class="sticky" ทำให้ header ลอยติดด้านบนตลอดเวลา (position: sticky) -->
+        <header class="sticky">
+            <nav>
+                <div class="nav-container">
+                    <div class="nav-wrap">
+
+                        <!-- Logo: กดแล้วกลับหน้า index.html
+                             ⚠️ SHARED: มีเหมือนกันใน shoppingCart.html -->
+                        <div class="logo">
+                            <a href="index.html"><img src="./logoH.svg" alt=""></a>
+                        </div>
+
+                        <!-- Search Bar: ช่องค้นหาสินค้า (ยังไม่มี logic JS)
+                             ⚠️ SHARED: มีเหมือนกันใน shoppingCart.html
+                             CSS: .shoppingC .search-bar button override ความสูงปุ่มในหน้า cart -->
+                        <div class="search-bar">
+                            <form action="">
+                                <input type="text" name="" id="">
+                            </form>
+                            <button type="button" class="svg-search">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+
+                        <!-- เมนูขวา: User dropdown, Cart, Delivery, Language
+                             ⚠️ SHARED: โครงสร้าง ul นี้ใช้ร่วมกับทุกหน้า
+                             .countItems  → JS (updateCartCount) อัปเดตตัวเลขสินค้าในตะกร้า
+                             .dropdown    → CSS แสดง .dropdown-content เมื่อ hover -->
+                        <div class="nav-right">
+                            <ul>
+                                <!-- User icon + dropdown: Sign in / My order / My Message -->
+                                <li class="dropdown"><i class="fa-solid fa-user"></i>
+                                    <div class="dropdown-content">
+                                        <a href="#">Sign in / Register</a>
+                                        <a href="#">My order</a>
+                                        <a href="#">My Message</a>
+                                    </div>
+                                </li>
+                                <!-- Cart icon: .countItems แสดงจำนวนสินค้า
+                                     JS (updateCartCount) อัปเดตตัวเลขนี้ทุกครั้งที่ cart เปลี่ยน -->
+                                <li class="dropdown"><a href="shoppingCart.html"><i class="fa-solid fa-cart-shopping">
+                                    <span class="countItems">
+                                        0
+                                    </span>
+                                </i></a></li>
+                                <!-- Delivery icon: ลิงก์ไป deliveryPage.html -->
+                                <li class="dropdown"><a href="deliveryPage.html"><i class="fa-solid fa-truck"></i></a></li>
+                                <!-- Language icon -->
+                                <li class="dropdown"><a href="#"><i class="fa-solid fa-globe"></i></a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <!-- ===== End Header ===== -->
+
+        <!-- ===== Main Content ===== -->
+        <main>
+            <div class="container">
+                <div class="main-wrap">
+
+                    <!-- --- Promotion Slider ---
+                         แสดงรูปโปรโมชันสลับกัน 3 รูป (promotion1–3.jpg)
+                         #main-img  → JS (initSliderpic) เปลี่ยน src รูปเมื่อกดปุ่ม
+                         #prev-btn  → JS ผูก event กดเพื่อเลื่อนรูปซ้าย
+                         #next-btn  → JS ผูก event กดเพื่อเลื่อนรูปขวา
+                         .btn .prev/.next → CSS ซ่อนด้วย opacity:0 แสดงเมื่อ hover บนกล่องรูป -->
+                    <div class="promotion-area-slide">
+                        <img src="./promotion1.jpg" id="main-img" alt="image">
+                        <button class="btn prev" id="prev-btn"></button>
+                        <button class="btn next" id="next-btn"></button>
+                    </div>
+
+                    <!-- --- Categories Filter ---
+                         ปุ่มกรองสินค้าตามเพศ กดซ้ำเพื่อยกเลิก filter
+                         .gender-m   → JS (initFilter) filter เฉพาะ data-type="Men Shirt"
+                         .gender-wm  → JS (initFilter) filter เฉพาะ data-type="Women Shirt"
+                         .active     → CSS เปลี่ยนสี icon เมื่อถูกเลือก (ฟ้า/ชมพู) -->
+                    <div class="Categories">
+                        <div class="categories-wrap">
+                            <a href="#" class="gender-m">
+                                <i class="fa-solid fa-mars"></i>
+                                <span>Men</span>
+                            </a>
+                            <a href="#" class="gender-wm">
+                                <i class="fa-solid fa-venus"></i>
+                                <span>Women</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- --- Product Cards ---
+                         รายการสินค้าทั้งหมด 8 รายการ (ชาย 4, หญิง 4)
+                         แต่ละ .card-item มี data attribute ให้ JS ดึงข้อมูล:
+                           data-id    → รหัสสินค้า (JS ตรวจสอบซ้ำก่อน push ลง cart)
+                           data-type  → "Men Shirt" / "Women Shirt" (JS ใช้กรองตาม filter)
+                           data-price → ราคา (JS เก็บลง cart เมื่อกดเพิ่ม)
+                         .fa-cart-arrow-down → JS (initAddToCart) ดักจับ click เพื่อเพิ่มสินค้า
+                         .card-item.hidden   → CSS ซ่อน card ที่ไม่ตรงกับ filter ปัจจุบัน -->
+                    <div class="card-container">
+                        <div class="card-wrap">
+
+                            <!-- สินค้าชาย #1 -->
+                            <div class="card-item" data-id="1" data-type="Men Shirt" data-price="59.99">
+                                <div class="card-item-wrap">
+                                    <i class="fa-solid fa-cart-arrow-down"></i>
+                                </div>
+                                <div class="image-wrap">
+                                    <img src="./m-cloths1.png" alt="">
+                                </div>
+                                <p>Classic Wool Blend Overcoat</p>
+                                <div class="card-bottom">
+                                    <p>Price: $59.99</p>
+                                    <p>sold: 1piece</p>
+                                </div>
+                            </div>
+
+                            <!-- สินค้าชาย #2 -->
+                            <div class="card-item" data-id="2" data-type="Men Shirt" data-price="49.99">
+                                <div class="card-item-wrap">
+                                    <i class="fa-solid fa-cart-arrow-down"></i>
+                                </div>
+                                <div class="image-wrap">
+                                    <img src="./m-cloths2.png" alt="">
+                                </div>
+                                <p>Color Block Hooded Puffer Jacket</p>
+                                <div class="card-bottom">
+                                    <p>Price: $49.99</p>
+                                    <p>sold: 1piece</p>
+                                </div>
+                            </div>
+
+                            <!-- สินค้าชาย #3 -->
+                            <div class="card-item" data-id="3" data-type="Men Shirt" data-price="29.99">
+                                <div class="card-item-wrap">
+                                    <i class="fa-solid fa-cart-arrow-down"></i>
+                                </div>
+                                <div class="image-wrap">
+                                    <img src="./m-cloths3.png" alt="">
+                                </div>
+                                <p>Plaid Short Sleeve Shirt with Tie</p>
+                                <div class="card-bottom">
+                                    <p>Price: $29.99</p>
+                                    <p>sold: 1piece</p>
+                                </div>
+                            </div>
+
+                            <!-- สินค้าชาย #4 -->
+                            <div class="card-item" data-id="4" data-type="Men Shirt" data-price="69.99">
+                                <div class="card-item-wrap">
+                                    <i class="fa-solid fa-cart-arrow-down"></i>
+                                </div>
+                                <div class="image-wrap">
+                                    <img src="./m-cloths4.png" alt="">
+                                </div>
+                                <p>Faux Leather Biker Jacket</p>
+                                <div class="card-bottom">
+                                    <p>Price: $69.99</p>
+                                    <p>sold: 1piece</p>
+                                </div>
+                            </div>
+
+                            <!-- สินค้าหญิง #1 -->
+                            <div class="card-item" data-id="5" data-type="Women Shirt" data-price="39.99">
+                                <div class="card-item-wrap">
+                                    <i class="fa-solid fa-cart-arrow-down"></i>
+                                </div>
+                                <div class="image-wrap">
+                                    <img src="./wm-cloths1.png" alt="">
+                                </div>
+                                <p>Elegant Lace Sleeveless Dress</p>
+                                <div class="card-bottom">
+                                    <p>Price: $39.99</p>
+                                    <p>sold: 1piece</p>
+                                </div>
+                            </div>
+
+                            <!-- สินค้าหญิง #2 -->
+                            <div class="card-item" data-id="6" data-type="Women Shirt" data-price="34.99">
+                                <div class="card-item-wrap">
+                                    <i class="fa-solid fa-cart-arrow-down"></i>
+                                </div>
+                                <div class="image-wrap">
+                                    <img src="./wm-cloths2.png" alt="">
+                                </div>
+                                <p>Soft Velvet Zip-Up Jacket</p>
+                                <div class="card-bottom">
+                                    <p>Price: $34.99</p>
+                                    <p>sold: 1piece</p>
+                                </div>
+                            </div>
+
+                            <!-- สินค้าหญิง #3 -->
+                            <div class="card-item" data-id="7" data-type="Women Shirt" data-price="27.99">
+                                <div class="card-item-wrap">
+                                    <i class="fa-solid fa-cart-arrow-down"></i>
+                                </div>
+                                <div class="image-wrap">
+                                    <img src="./wm-cloths3.png" alt="">
+                                </div>
+                                <p>Classic Plaid Button-Up Shirt</p>
+                                <div class="card-bottom">
+                                    <p>Price: $27.99</p>
+                                    <p>sold: 1piece</p>
+                                </div>
+                            </div>
+
+                            <!-- สินค้าหญิง #4 -->
+                            <div class="card-item" data-id="8" data-type="Women Shirt" data-price="44.99">
+                                <div class="card-item-wrap">
+                                    <i class="fa-solid fa-cart-arrow-down"></i>
+                                </div>
+                                <div class="image-wrap">
+                                    <img src="./wm-cloths4.png" alt="">
+                                </div>
+                                <p>Cropped Satin Statement Jacket</p>
+                                <div class="card-bottom">
+                                    <p>Price: $44.99</p>
+                                    <p>sold: 1piece</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- --- End Product Cards --- -->
+
+                </div>
+            </div>
+        </main>
+        <!-- ===== End Main Content ===== -->
+
+        <!-- ===== Footer ===== -->
+        <!-- แบ่งเป็น 4 คอลัมน์ด้วย CSS grid
+             หน้าอื่น (shoppingCart, deliveryPage) ไม่มี footer นี้ มีเฉพาะ index.html -->
+        <footer>
+            <div class="container footer">
+                <div class="footer-wrap">
+
+                    <!-- คอลัมน์ 1: ลิงก์บริการลูกค้า -->
+                    <div class="customer-service">
+                        <div class="customer-service-wrap">
+                            <h3>customer service</h3>
+                            <ul>
+                                <li><a href="#">Help Centre</a></li>
+                                <li><a href="#">How To Buy</a></li>
+                                <li><a href="#">How To Sell</a></li>
+                                <li><a href="#">Payment Methods</a></li>
+                                <li><a href="#">Clothsess Coins</a></li>
+                                <li><a href="#">Shipping & Delivery</a></li>
+                                <li><a href="#">Return & Refund</a></li>
+                                <li><a href="#">Clothsess Guarantee</a></li>
+                                <li><a href="#">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- คอลัมน์ 2: ลิงก์เกี่ยวกับบริษัท -->
+                    <div class="about-clothsess">
+                        <div class="about-clothsess-wrap">
+                            <h3>about clothsess</h3>
+                            <ul>
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Affiliate Program</a></li>
+                                <li><a href="#">Clothsess Careers</a></li>
+                                <li><a href="#">Policies</a></li>
+                                <li><a href="#">Clothsess Privacy Policy</a></li>
+                                <li><a href="#">Clothsess Blog</a></li>
+                                <li><a href="#">Clothsess Mall</a></li>
+                                <li><a href="#">Seller Centre</a></li>
+                                <li><a href="#">Flash Deals</a></li>
+                                <li><a href="#">Media Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- คอลัมน์ 3: โลโก้วิธีชำระเงิน -->
+                    <div class="payment">
+                        <div class="payment-wrap">
+                            <h3>payment</h3>
+                            <ul>
+                                <li><i><img src="./Mastercard.png" alt=""></i></li>
+                                <li><i><img src="./Visa.png" alt=""></i></li>
+                                <li><i><img src="./Applepay.png" alt=""></i></li>
+                                <li><i><img src="./PayPal.png" alt=""></i></li>
+                                <li><i><img src="./Amex.png" alt=""></i></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- คอลัมน์ 4: ลิงก์ Social Media พร้อมโลโก้ -->
+                    <div class="follow-us">
+                        <div class="follow-us-wrap">
+                            <h3>follow us</h3>
+                            <div class="follow-us-logo">
+                                <ul>
+                                    <li><a href="#"><img src="./Facebook-logo.svg" alt=""></a></li>
+                                    <span>Facebook</span>
+                                </ul>
+                            </div>
+                            <div class="follow-us-logo">
+                                <ul>
+                                    <li><a href="#"><img src="./ig.png" alt=""></a></li>
+                                    <span>Instragram</span>
+                                </ul>
+                            </div>
+                            <div class="follow-us-logo">
+                                <ul>
+                                    <li><a href="#"><img src="./linkedIn.svg" alt=""></a></li>
+                                    <span>LinkedIn</span>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+        <!-- ===== End Footer ===== -->
+
+        <!-- ===== Copyright ===== -->
+        <!-- แถบลิขสิทธิ์ด้านล่างสุด มีเฉพาะ index.html -->
+        <div class="container">
+            <div class="copyright">
+                <div class="copyright-wrap">
+                    <p>&copy; 2025 Clothsess. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+        <!-- ===== End Copyright ===== -->
+
+        <!-- script.js โหลดหลังสุดด้วย defer ให้ HTML โหลดก่อนเสมอ
+             ⚠️ SHARED: ทุกหน้าโหลด script.js ไฟล์เดียวกัน
+             Router ใน JS จะอ่าน data-page="main" และเรียก initSliderpic(), initAddToCart(), initFilter() -->
+        <script src="script.js" defer></script>
+
+    </body>
+</html>

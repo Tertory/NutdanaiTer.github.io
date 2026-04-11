@@ -1,0 +1,1281 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   GLOBAL / RESET
+   ============================================================ */
+
+/*--- Reset ---*/
+/* ลบ margin/padding ที่ browser ใส่มาให้อัตโนมัติ และให้ขนาดกล่องคำนวณจาก border เข้าไปด้านใน */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*--- Layout Container ---*/
+/* กล่องหลักที่จำกัดความกว้างสูงสุด 1280px และจัดตรงกลางหน้าด้วย margin auto */
+.container {
+    display: flex;
+    max-width: 1280px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*--- Header & Navbar ---*/
+/* ตกแต่ง header ให้มีพื้นหลังสีเขียว และ navbar ให้ติดด้านบนจอเสมอด้วย position: sticky */
+header {
+    background-color: #b2df6b;
+}
+
+.nav-container {
+    display: flex;
+    width: 100%;
+}
+
+/* sticky ทำให้ navbar ลอยติดด้านบนตอน scroll โดยใช้ z-index สูงเพื่อให้อยู่บนสุด */
+.sticky {
+    position: sticky;
+    top: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+    width: 100%;
+    border-bottom: 0.5px solid lightgray;
+    z-index: 9999;
+}
+
+/* จัดเรียง logo, search bar, และเมนูขวาในแนวนอนให้กระจายออกสองฝั่ง */
+.nav-wrap {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+.nav-right {
+    display: flex;
+    border: 1px solid #000;
+}
+
+/* เมนูลิงก์ขวามือ จัดเป็นแถวนอนด้วย flex และเว้นช่องระหว่างรายการ */
+.nav-right ul {
+    display: flex;
+    padding: 0.2rem;
+    align-items: center;
+    column-gap: 1.5rem;
+}
+
+.nav-right li {
+    padding: 3px 20px;
+    margin: 0 6px;
+    cursor: pointer;
+}
+
+/* icon ตะกร้าสินค้า ใช้ position: relative เพื่อให้ badge จำนวนสินค้าลอยอยู่มุมบนขวาได้ */
+.fa-cart-shopping {
+    position: relative;
+    display: flex;
+}
+
+/* badge ตัวเลขจำนวนสินค้า ใช้ position: absolute วางซ้อนบน icon */
+.nav-right span {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    display: inline-block;
+    font-size: 10px;
+}
+
+/*--- Logo ---*/
+/* กล่องโลโก้ใช้ position: relative เพื่อให้รูปโลโก้ข้างในลอยออกมาเกินกรอบได้ด้วย position: absolute */
+.logo {
+    align-content: center;
+    width: 8vw;
+    height: 2.6vw;
+    position: relative;
+}
+
+.logo img {
+    height: 115px;
+    width: auto;
+    object-fit: contain;
+    position: absolute;
+    top: -40px;
+}
+
+/*--- Search Bar ---*/
+/* ช่องค้นหา จัดเป็นแถวนอน input กว้าง 20vw ปุ่มกว้าง 3vw */
+.search-bar {
+    display: flex;
+}
+
+.search-bar input {
+    width: 20vw;
+    height: 2.6vw;
+    padding-left: 10px;
+}
+
+.search-bar button {
+    width: 3vw;
+    border: 1px solid #fbfbfb;
+}
+
+/*--- Dropdown Menu ---*/
+/* เมนู dropdown ซ่อนด้วย display: none แล้ว fade in ด้วย opacity + transition เมื่อ hover */
+.dropdown {
+    position: relative;
+}
+
+.dropdown ul {
+    position: relative;
+    display: inline-block;
+}
+
+/* กล่อง dropdown วางด้วย position: absolute ใต้ icon พอดี ซ่อนด้วย opacity: 0 */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 160px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    border-radius: 8px;
+    padding: 8px 0;
+    right: 4px;
+    top: 110%;
+    z-index: 10000;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* เมื่อ hover จะเปลี่ยน display เป็น flex และ fade in พร้อม slide ลงมาเบาๆ */
+.dropdown:hover .dropdown-content {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-content a {
+    padding: 10px 16px;
+    font-size: 13px;
+    color: #333;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-content a:hover {
+    background-color: #f0f9e0;
+    color: #5a8a1a;
+    padding-left: 20px;
+    transition: padding-left 0.2s ease;
+}
+
+/* ลูกศรเล็กๆ ชี้ขึ้น สร้างด้วย pseudo-element ::before หมุน 45 องศาเป็นรูปสามเหลี่ยม */
+.dropdown-content::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    right: 20px;
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    transform: rotate(45deg);
+    box-shadow: -2px -2px 4px rgba(0,0,0,0.05);
+}
+
+
+/* ============================================================
+   HOME PAGE (index.html)
+   ============================================================ */
+
+/*--- Promotion Slider ---*/
+/* กล่องรูปโปรโมชัน ใช้ position: relative เพื่อให้ปุ่ม prev/next วางซ้อนได้ด้วย absolute */
+.promotion-area-slide {
+    position: relative;
+}
+
+.promotion-area-slide img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* ปุ่ม prev/next ซ่อนด้วย opacity: 0 แล้วค่อย fade in เมื่อ hover บนกล่องรูป */
+.promotion-area-slide .btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 15px 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background-color: rgba(0,0,0,0.4);
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.promotion-area-slide:hover .btn {
+    opacity: 1;
+}
+
+.promotion-area-slide .prev {
+    left: 15px;
+}
+
+.promotion-area-slide .next {
+    right: 15px;
+}
+
+/* ใส่เนื้อหาลูกศรผ่าน content เพื่อไม่ต้องเขียน HTML */
+.promotion-area-slide .prev::after {
+    content: "❮";
+}
+
+.promotion-area-slide .next::after {
+    content: "❯";
+}
+
+/* ปุ่มขยายนิดๆ เมื่อ hover ด้วย scale(1.1) */
+.promotion-area-slide .btn:hover {
+    background-color: rgba(0,0,0,0.7);
+    transform: translateY(-50%) scale(1.1);
+    transition: all 0.2s ease;
+}
+
+/*--- Categories Filter ---*/
+/* แถบเลือกหมวดสินค้า (Men/Women) จัดเป็นแถวนอนห่างกัน 10rem */
+.categories-wrap {
+    display: flex;
+    column-gap: 10rem;
+    margin: 2rem 0 0 2rem;
+}
+
+/* กล่อง Categories จัดเป็นแถวนอนกระจาย align กลางแนวตั้ง */
+div .Categories {
+    display: flex;
+    margin-top: 3rem;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 2rem;
+    column-gap: 20px;
+}
+
+/* แต่ละ link ใน Categories จัดเป็น column ให้ icon อยู่บน text อยู่ล่าง */
+.Categories a {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Categories span {
+    font-size: 2.5rem;
+}
+
+.fa-mars {
+    font-size: 3.2rem;
+}
+
+.fa-venus {
+    font-size: 3.2rem;
+}
+
+/* เปลี่ยนสี icon ตามเพศเมื่อ hover หรือ active (ถูกกดเลือก) */
+.gender-m:hover {
+    color: #27aae2;
+}
+
+.gender-m.active {
+    color: #27aae2;
+}
+
+.gender-wm:hover {
+    color: #f84a99;
+}
+
+.gender-wm.active {
+    color: #f84a99;
+}
+
+/* ซ่อน card ที่ไม่ตรงกับ filter ที่เลือก โดย JS จะเพิ่ม class .hidden มาให้ */
+.card-item.hidden {
+    display: none;
+}
+
+/*--- Product Cards ---*/
+/* กล่องรวม card ทุกใบ จัดเป็นแถวนอนและขึ้นบรรทัดใหม่อัตโนมัติด้วย flex-wrap */
+.card-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1rem;
+    justify-content: space-between;
+}
+
+/* card แต่ละใบ กำหนดขนาดคงที่ 256px มี border และ cursor pointer เพื่อบอกว่ากดได้ */
+.card-item {
+    border: 1px solid rgb(219, 219, 219);
+    max-width: 256px;
+    width: 256px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.card-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    margin: 3.5rem;
+}
+
+.card-item p {
+    margin: 0.7rem;
+}
+
+.card-item i {
+    font-size: 20px;
+}
+
+/* เพิ่ม shadow เมื่อ hover เพื่อบอกว่า card นั้น active */
+.card-item:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* กล่องปุ่มเพิ่มสินค้า จัดไปชิดขวาล่างของ card ด้วย place-self: flex-end */
+.card-item-wrap {
+    display: flex;
+    place-self: flex-end;
+    padding: 12px;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* icon ตะกร้า ขยายและเปลี่ยนสีเมื่อ hover */
+.card-item-wrap i:hover {
+    cursor: pointer;
+    transform: scale(1.3);
+    color: #94b859;
+}
+
+/* กดแล้วหดเล็กลงเหมือน feedback การกด */
+.card-item-wrap i:active {
+    transform: scale(0.8);
+}
+
+/* กล่องรูปภาพ fix ความสูงและซ่อนส่วนเกินด้วย overflow: hidden เพื่อให้รูปทุกใบขนาดเท่ากัน */
+.image-wrap {
+    width: 100%;
+    height: 260px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* แถวล่างสุดของ card จัดชื่อ-ราคาซ้าย และปุ่มตะกร้าขวา */
+.card-bottom {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.7rem;
+}
+
+/*--- Footer ---*/
+/* footer ทั้งหมด มีพื้นหลังสีอ่อน จัดด้วย flex */
+footer {
+    margin-top: 2rem;
+    display: flex;
+    background-color: #fbfbfb;
+}
+
+.footer {
+    margin: 3rem auto;
+}
+
+/* แบ่ง footer เป็น 4 คอลัมน์เท่าๆ กันด้วย grid */
+.footer-wrap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+/* หัวข้อแต่ละคอลัมน์ footer เป็นตัวพิมพ์ใหญ่ ตัวหนา */
+.customer-service-wrap h3 {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.customer-service-wrap a {
+    font-size: 10px;
+}
+
+.customer-service-wrap a:hover {
+    color: #94b859;
+}
+
+.about-clothsess-wrap h3 {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.about-clothsess-wrap a {
+    font-size: 10px;
+}
+
+.about-clothsess-wrap a:hover {
+    color: #94b859;
+}
+
+/* คอลัมน์ช่องทางชำระเงิน แสดงโลโก้บัตรเครดิตเป็นแถว */
+.payment-wrap {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.payment-wrap ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    margin: 0 0 1rem;
+    padding: 0;
+}
+
+.payment-wrap img {
+    width: 100%;
+    height: 50px;
+    overflow: hidden;
+    display: block;
+}
+
+/* คอลัมน์ social media จัดเป็น column */
+.follow-us {
+    margin-left: 4rem;
+}
+
+.follow-us-wrap {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.7rem;
+}
+
+.follow-us-wrap h3 {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.follow-us-logo ul {
+    display: flex;
+}
+
+.follow-us-logo img {
+    width: 100%;
+    height: 40px;
+    overflow: hidden;
+    display: block;
+}
+
+.follow-us-logo:hover {
+    color: #94b859;
+}
+
+.follow-us-logo span {
+    font-size: 10px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+/* แถบ copyright ด้านล่างสุด */
+.copyright p {
+    font-size: 12px;
+}
+
+.copyright {
+    padding: 4rem 0;
+}
+
+
+/* ============================================================
+   SHOPPING CART PAGE (shoppingCart.html)
+   ============================================================ */
+
+/*--- Layout ---*/
+/* หน้าตะกร้า มีพื้นหลังสีอ่อน แบ่งเป็น 2 ฝั่ง: ซ้าย (รายการสินค้า) และขวา (สรุปยอด) */
+.shoppingC body {
+    background-color: #fbfbfb;
+}
+
+/* ใช้ flex เพื่อให้ฝั่งซ้ายและขวาอยู่แถวเดียวกัน และ align ชิดด้านบน */
+.shoppingC .main-wrap {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+}
+
+/* override ความสูงปุ่มค้นหาเฉพาะหน้าตะกร้า */
+.shoppingC .search-bar button {
+    height: 4.8vh;
+}
+
+/* ฝั่งซ้ายกว้างกว่าขวา 2 เท่า ด้วย flex: 2 */
+.leftContainer {
+    flex: 2;
+}
+
+/* ฝั่งขวาสรุปยอด ใช้ flex: 1 และ height: min-content เพื่อให้สูงแค่เนื้อหา */
+.rightContainer {
+    flex: 1;
+    border: 0.5px solid #9ca3af;
+    height: min-content;
+}
+
+/* กล่อง card ขาว มี border และ border-radius เล็กน้อย */
+.boxTemplate {
+    margin: 10px;
+    padding: 10px;
+    background-color: #fbfbfb;
+    border: 0.5px solid #9ca3af;
+    border-radius: 5px;
+}
+
+.boxTemplateRight {
+    margin: 10px;
+    padding: 10px;
+    background-color: #fbfbfb;
+}
+
+.boxTemplateProduct {
+    background-color: #fbfbfb;
+}
+
+/* ข้อความแสดงเมื่อตะกร้าว่างเปล่า */
+.noProduct {
+    margin: 10px;
+    padding: 10px;
+}
+
+/*--- Checkbox ---*/
+/* custom checkbox: ซ่อน input จริง แล้วสร้างกล่องสี่เหลี่ยมเทียมด้วย .checkmark */
+.checkbox input {
+    position: absolute;
+    opacity: 0;
+}
+
+.checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 8px;
+}
+
+/* กล่องสี่เหลี่ยมเทียม ใช้ ::before สร้างเครื่องหมายถูก */
+.checkmark {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    position: relative;
+    border: 0.5px solid #9ca3af;
+}
+
+.checkmark:hover {
+    background-color: #dbdbdb;
+}
+
+/* เครื่องหมายถูก สร้างด้วย border หมุน 45 องศา */
+.checkmark::before {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 7px;
+    top: 1px;
+    width: 5px;
+    height: 15px;
+    border: 1px solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* เมื่อ input ถูก check → กล่องเปลี่ยนสีเขียว และแสดงเครื่องหมายถูก */
+.checkbox input:checked + .checkmark {
+    background-color: #4caf50;
+}
+
+.checkbox input:checked + .checkmark::before {
+    display: block;
+}
+
+/* checkbox แบบที่สองสำหรับ cart item แต่ละรายการ (logic เหมือน .checkbox) */
+.checkboxSelect input {
+    position: absolute;
+    opacity: 0;
+}
+
+.checkboxSelect {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.checkmarkSelect {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    position: relative;
+    border: 0.5px solid #9ca3af;
+}
+
+.checkmarkSelect:hover {
+    background-color: #dbdbdb;
+}
+
+.checkmarkSelect::before {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 7px;
+    top: 1px;
+    width: 5px;
+    height: 15px;
+    border: 1px solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkboxSelect input:checked + .checkmarkSelect {
+    background-color: #4caf50;
+}
+
+.checkboxSelect input:checked + .checkmarkSelect::before {
+    display: block;
+}
+
+/*--- Cart Items ---*/
+/* แถวข้อความ "X items" ด้านบนรายการ */
+.texttie {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* แถวสินค้าแต่ละชิ้น จัดแนวนอน มีเส้นขีดใต้แบ่งระหว่างรายการ */
+.cart-item-row {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+
+.cart-item-row:not(:last-child) {
+    border-bottom: 0.5px solid #dbdbdb;
+}
+
+/* รูปสินค้าใน cart กำหนดขนาดคงที่และ object-fit: contain ให้รูปไม่บิดเบี้ยว */
+.cart-item-row img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+/* กล่องข้อมูลสินค้า จัดให้ชื่อ-ราคา-จำนวน อยู่แถวเดียวกันด้วย flex */
+.productList {
+    flex: 1;
+    margin-left: 40px;
+    display: flex;
+    column-gap: 40px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* ปุ่ม +/- จำนวนสินค้า จัดเป็นแถวนอน */
+.qty-control {
+    margin: 0 35px 0 0;
+    display: flex;
+    flex-direction: row;
+    row-gap: 15px;
+    align-items: center;
+}
+
+.qty-control span {
+    margin: 0 10px;
+}
+
+.qty-control button {
+    font-size: 20px;
+    padding: 15px;
+}
+
+/* ปุ่มลบสินค้าออกจากตะกร้า เปลี่ยนเป็นสีแดงเมื่อ hover */
+.delTrash {
+    border: 0.5px solid #9ca3af;
+    min-width: 30px;
+    min-height: 30px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.delTrash:hover {
+    cursor: pointer;
+    background-color: #f13f3f;
+    color: #f4f4f4;
+}
+
+/*--- Order Summary ---*/
+/* หัวข้อ "Order Summary" ด้านขวา */
+.order-summary h1 {
+    margin: 10px;
+    padding: 10px;
+    font-weight: bold;
+}
+
+/* กล่องรายละเอียดก่อนปุ่ม checkout มี line-height กว้างให้อ่านง่าย */
+.bf-checkout {
+    line-height: 3rem;
+}
+
+/* แถวแสดงยอดสินค้า, ค่าส่ง, ส่วนลด, ยอดรวม — ใช้ flex justify-content: space-between
+   เพื่อให้ชื่อซ้าย ตัวเลขขวา */
+.subTotal {
+    display: flex;
+    justify-content: space-between;
+}
+
+.shippingFee {
+    display: flex;
+    justify-content: space-between;
+}
+
+.grandTotal {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* แถวส่วนลด แสดง/ซ่อนด้วย JS ตามว่ามีคูปองหรือไม่ */
+.discount-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*--- Voucher ---*/
+/* ฟอร์มกรอก voucher code จัดเป็นแถวนอน input ยืดเต็มพื้นที่ด้วย flex: 1 */
+.voucher form {
+    display: flex;
+    column-gap: 5px;
+    height: 2.5rem;
+    align-items: center;
+}
+
+.voucher form input[type=text] {
+    height: 2.5rem;
+    flex: 1;
+    width: 100%;
+    padding: 0 2px;
+    font-size: 14px;
+    font-weight: 300;
+    border: 0.5px solid #9ca3af;
+    border-radius: 5px;
+}
+
+.voucher form button {
+    height: 2.5rem;
+    padding: 0px 8px;
+    font-size: 14px;
+    font-weight: 300;
+    border: 0.5px solid #9ca3af;
+    line-height: 2.5rem;
+    border-radius: 5px;
+}
+
+.voucher form button:hover {
+    background-color: #c5ce1a;
+    color: #ffffff;
+}
+
+/*--- Checkout Button ---*/
+/* ปุ่ม PROCEED TO CHECKOUT เต็มความกว้าง เปลี่ยนพื้นหลังเป็นสีเขียวเมื่อ hover */
+.btnCheckOut {
+    background-color: white;
+    border: 1px solid #9ca3af;
+    border-radius: 5px;
+    margin: 0 0 8px 0;
+}
+
+.btnCheckOut button {
+    padding: 5px;
+    width: 100%;
+}
+
+.btnCheckOut button:hover {
+    color: #ffffff;
+    background-color: #4caf51;
+}
+
+
+/* ============================================================
+   DELIVERY PAGE (deliveryPage.html)
+   ============================================================ */
+
+/*--- Header / Navigation ---*/
+/* navbar หน้า delivery ไม่มี margin-bottom (ต่างจาก global sticky) */
+.page-delivery .sticky {
+    position: sticky;
+    top: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    width: 100%;
+    border-bottom: 0.5px solid lightgray;
+    z-index: 9999;
+    margin-bottom: 0;
+}
+
+/* navbar delivery จัดชิดขวาด้วย justify-content: end */
+.nav-wrap-delivery {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+/* เส้นขีดใต้บางๆ สำหรับแบ่งส่วน */
+.linebottom {
+    border-bottom: 1px solid #00000017;
+}
+
+/* แถว head delivery มีโลโก้และชื่อหน้าจัดแถวนอน */
+.head-delivery {
+    display: flex;
+    align-items: anchor-center;
+}
+
+.head-delivery a {
+    margin-left: 1.5rem;
+}
+
+.head-delivery img {
+    height: 5rem;
+    width: 10rem;
+    object-fit: contain;
+}
+
+/* เส้น separator แนวตั้งระหว่าง logo กับชื่อหน้า */
+.line {
+    font-size: 2rem;
+    display: flex;
+    margin-right: 0.5rem;
+}
+
+.line p {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.page-derivery .line {
+    display: inline-block;
+}
+
+/*--- Main Layout ---*/
+/* พื้นหลังของ main content หน้า delivery */
+.page-delivery main {
+    background-color: #fbfbfb;
+}
+
+.page-delivery .container {
+    display: flex;
+    max-width: 1280px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* หัวข้อ "My Address" มีชื่อสีเขียวตามธีม */
+.nameaddress {
+    margin-left: 0.5rem;
+    display: flex;
+    margin-top: 30px;
+}
+
+.nameaddress h1 {
+    font-size: 1.5rem;
+    color: #b2df6b;
+}
+
+/*--- Address Form ---*/
+/* กล่องฟอร์มกรอกที่อยู่ จำกัดกว้าง 700px จัดกลางด้วย margin auto */
+.formdelivery-wrap {
+    max-width: 700px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #dbdbdb;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+/* form ข้างในมี row-gap ห่างระหว่าง input แต่ละช่อง */
+.page-delivery form {
+    padding: 1rem;
+    justify-content: space-between;
+    row-gap: 45px;
+}
+
+/* div ที่ครอบ input ใช้ position: relative เพื่อให้ label ลอยไปอยู่บน input */
+.page-delivery form div {
+    position: relative;
+}
+
+/* label ลอยด้านบน input ด้วย position: absolute และ top: -16px */
+.page-delivery label {
+    position: absolute;
+    top: -16px;
+    background-color: #fbfbfb;
+    left: 5px;
+    color: #212020;
+}
+
+/* input ทุกช่องในฟอร์ม delivery มีขนาดและ border เหมือนกัน */
+.page-delivery form input {
+    border: 1px solid #dbdbdb;
+    height: 2.5rem;
+    width: 13rem;
+}
+
+.page-delivery .myaddress h3 {
+    margin-bottom: 1rem;
+}
+
+/* icon pin สีแดงหน้าชื่อที่อยู่ */
+.page-delivery .fa-location-dot {
+    margin-left: 0.8rem;
+    font-size: 20px;
+    color: red;
+}
+
+/*--- Address List ---*/
+/* กล่องรวมรายการที่อยู่ที่บันทึกแล้ว มีเส้นขีดใต้แบ่งจากส่วนอื่น */
+.myaddress {
+    display: flex;
+    margin-top: 1rem;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+/* แต่ละรายการที่อยู่ จัดเป็นแถวนอน มี radio button ซ้าย ข้อมูลกลาง ปุ่มลบขวา */
+.saveAddress {
+    display: flex;
+    margin-left: 20px;
+    margin-bottom: 1.3rem;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 1.3rem;
+    border-top: 1px solid #dbdbdb;
+    padding-top: 20px;
+}
+
+/* radio button ขยายให้ใหญ่ขึ้น 1.5 เท่าด้วย transform: scale */
+.saveAddress input {
+    transform: scale(1.5);
+}
+
+.saveAddress input:hover {
+    cursor: pointer;
+    accent-color: #94b859;
+}
+
+.infoAddress {
+    display: flex;
+}
+
+/* ข้อความ edit ที่อยู่ เปลี่ยนสีและขีดเส้นใต้เมื่อ hover */
+.editAddress p:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #94b859;
+}
+
+/* ปุ่ม "+ Add New Address" มี border เบาๆ */
+.add-NewAddress {
+    margin-right: 32rem;
+    padding: 8px;
+    margin-left: 1rem;
+    border: 1px solid #dbdbdb;
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+}
+
+/* ซ่อนปุ่ม Add New Address เมื่อ JS เพิ่ม class .close (ตอนฟอร์มเปิดอยู่) */
+#add-NewAddress.close {
+    display: none;
+}
+
+.add-NewAddress:hover {
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+/* แถวปุ่ม Save / Cancel ด้านล่างฟอร์ม */
+.address-bottom {
+    margin-bottom: 1rem;
+    column-gap: 1rem;
+    margin-right: 1rem;
+    margin-top: 1rem;
+}
+
+.address-bottom button {
+    padding: 8px 16px;
+    border: 1px solid #dbdbdb;
+}
+
+.address-bottom button:hover {
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+/*--- Show / Hide States ---*/
+/* ฟอร์มกรอกที่อยู่ใหม่ ซ่อนโดย default แสดงเมื่อ JS เพิ่ม class .open */
+#formDelivery {
+    display: none;
+}
+
+#formDelivery.open {
+    display: flex;
+}
+
+/* กล่องปุ่ม Save/Cancel ซ่อนโดย default แสดงพร้อมฟอร์ม */
+#showWhenaddBtn {
+    display: none;
+}
+
+#showWhenaddBtn.open {
+    display: flex;
+}
+
+#saveAdd {
+    display: none;
+}
+
+
+/* ============================================================
+   CHECKOUT MODAL
+   ============================================================ */
+
+/*--- Overlay ---*/
+/* พื้นหลังดำโปร่งแสง ปิดทับทั้งหน้าจอด้วย position: fixed และ z-index สูง */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 99999;
+    justify-content: center;
+    align-items: center;
+}
+
+/* เปิด modal โดย JS เพิ่ม class .active เปลี่ยน display เป็น flex เพื่อจัดกล่อง modal ตรงกลาง */
+.modal-overlay.active {
+    display: flex;
+}
+
+/*--- Modal Box ---*/
+/* กล่อง modal หลัก กำหนดความกว้างสูงสุด 500px และสูงสุด 85vh พร้อม scroll ได้ */
+.modal-box {
+    background: #fff;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+/*--- Modal Header ---*/
+/* header สีเขียว ติดด้านบนด้วย position: sticky เมื่อ scroll เนื้อหาภายใน modal */
+.modal-header {
+    background: #7ab832;
+    color: #fff;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px 12px 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.modal-header span {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* ปุ่มปิด X ทรงกลม มีพื้นหลังขาวโปร่งแสง */
+.modal-close {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-close:hover {
+    background: rgba(255,255,255,0.4);
+}
+
+/*--- Modal Body & Sections ---*/
+/* พื้นที่เนื้อหาภายใน modal มี padding รอบด้าน */
+.modal-body {
+    padding: 20px;
+}
+
+/* แต่ละ section ใน modal มีเส้นขีดใต้แบ่งส่วน */
+.modal-section {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-section h3 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* กล่องแสดงที่อยู่จัดส่ง มีพื้นหลังเทาอ่อน */
+.modal-address {
+    background: #f9f9f9;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+/*--- Address Options ---*/
+/* รายการที่อยู่ให้เลือก มี border เปลี่ยนสีเขียวเมื่อ hover */
+.address-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.address-option:hover {
+    border-color: #7ab832;
+}
+
+.address-option input {
+    margin-top: 4px;
+    accent-color: #7ab832;
+}
+
+.address-option p {
+    font-size: 13px;
+    margin: 2px 0;
+}
+
+/*--- Payment Options ---*/
+/* ตัวเลือกวิธีชำระเงิน แต่ละ option มี border เปลี่ยนสีเมื่อ hover หรือถูกเลือก */
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.payment-option:hover {
+    border-color: #7ab832;
+}
+
+.payment-option input:checked + span {
+    color: #7ab832;
+    font-weight: bold;
+}
+
+/*--- Order Summary Rows ---*/
+/* แถวสรุปยอด ชื่อซ้าย ราคาขวา ด้วย justify-content: space-between */
+.modal-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 13px;
+}
+
+/* แถวส่วนลด แสดงเป็นสีแดง */
+.modal-row.discount {
+    color: #e53e3e;
+}
+
+/* แถวยอดรวมสุดท้าย ตัวหนา ตัวใหญ่ขึ้น มีเส้นขีดบน */
+.modal-row.total {
+    border-top: 1px solid #eee;
+    padding-top: 12px;
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* ราคารวมสุดท้ายแสดงเป็นสีเขียวตามธีม */
+.modal-row.total span:last-child {
+    color: #7ab832;
+}
+
+/*--- Confirm Button ---*/
+/* ปุ่มยืนยัน order เต็มความกว้าง สีเขียว ตัวหนา */
+.confirm-order-btn {
+    width: 100%;
+    padding: 14px;
+    background: #7ab832;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 16px;
+}
+
+/* เข้มขึ้นเมื่อ hover */
+.confirm-order-btn:hover {
+    background: #6aa028;
+}
+
+/* หดเล็กลงนิดๆ เมื่อกด เหมือน feedback การกด */
+.confirm-order-btn:active {
+    transform: scale(0.98);
+}
