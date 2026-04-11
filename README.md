@@ -231,3 +231,4 @@ or use the **Live Server** extension in VS Code.
 | Font Awesome | 7.0.1 | All icons (cart, user, mars, venus, etc.) |
 | localStorage | — | Persists cart and address data in-browser |
 | PostCSS | 8.5.6 | CSS processing pipeline with Tailwind |
+
